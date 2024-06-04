@@ -36,4 +36,7 @@ jobs:
         run: terraform apply -auto-approve
         env:
           TF_VAR_docker_image_selection: ${{ github.event.inputs.docker_image_selection }}
-          TF_VAR_lambda_suffix: ${{ github.run_id }}  # Use GitHub run ID as a unique suffix
+          TF_VAR_lambda_suffix: ${{ github.run_id }}  
+          
+      - name: Capture Terraform outputs
+        run: echo "LAMBDA_FUNCTION_NAME=$(terraform output -raw lambda_function_name)" >> $GITHUB_ENV
