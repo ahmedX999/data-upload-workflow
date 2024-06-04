@@ -38,5 +38,5 @@ resource "aws_lambda_function" "my_lambda" {
   function_name = local.lambda_function_name
   role          = aws_iam_role.lambda_exec_role.arn
   package_type  = "Image"
-  image_uri     = "ghcr.io/${var.docker_image_selection}:latest"
+  image_uri     = "ghcr.io/ahmedx999/${var.docker_image_selection}:latest"
 }
