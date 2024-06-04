@@ -46,7 +46,7 @@ resource "aws_lambda_function" "my_lambda" {
   function_name = local.lambda_function_name
   role          = aws_iam_role.lambda_exec_role.arn
   package_type  = "Image"
-  #image_uri     = "ghcr.io/ahmedx999/${var.docker_image_selection}:latest"
-  image_uri = "533267285147.dkr.ecr.us-east-1.amazonaws.com/lambda-docker-google-drive:latest"
+  image_uri     = "009089246773.dkr.ecr.us-east-1.amazonaws.com/${var.docker_image_selection}:latest"
+  #image_uri = "533267285147.dkr.ecr.us-east-1.amazonaws.com/lambda-docker-google-drive:latest"
 }
 
