@@ -4,14 +4,22 @@ provider "aws" {
   region = var.aws_region
 }
 
+# Generate a random string for unique naming
+resource "random_string" "lambda_suffix" {
+  length  = 8
+  special = false
+  upper   = false
+}
+
 # Generate a unique Lambda function name
 locals {
   lambda_function_name = "my_lambda_function_${var.lambda_suffix}"
+  iam_role_name        = "lambda_exec_role_${random_string.lambda_suffix.result}"
 }
 
 # IAM Role for Lambda execution
 resource "aws_iam_role" "lambda_exec_role" {
-  name = "lambda_exec_role"
+  name = local.iam_role_name
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17",
@@ -39,4 +47,13 @@ resource "aws_lambda_function" "my_lambda" {
   role          = aws_iam_role.lambda_exec_role.arn
   package_type  = "Image"
   image_uri     = "ghcr.io/ahmedx999/${var.docker_image_selection}:latest"
+}
+
+# Output the Lambda function details
+output "lambda_function_arn" {
+  value = aws_lambda_function.my_lambda.arn
+}
+
+output "lambda_function_name" {
+  value = aws_lambda_function.my_lambda.function_name
 }
