@@ -3,6 +3,9 @@ name: Deploy Lambda Function
 on:
   workflow_dispatch:
     inputs:
+      lambda_function_name:
+        description: 'Name of the Lambda function'
+        required: true
       docker_image_selection:
         description: 'Select the Docker image to use'
         required: true
@@ -36,7 +39,8 @@ jobs:
         run: terraform apply -auto-approve
         env:
           TF_VAR_docker_image_selection: ${{ github.event.inputs.docker_image_selection }}
+          TF_VAR_lambda_function_name: ${{ github.event.inputs.lambda_function_name }}
           TF_VAR_lambda_suffix: ${{ github.run_id }}  
-          
+
       - name: Capture Terraform outputs
         run: echo "LAMBDA_FUNCTION_NAME=$(terraform output -raw lambda_function_name)" >> $GITHUB_ENV

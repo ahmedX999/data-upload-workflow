@@ -43,7 +43,7 @@ resource "aws_iam_role_policy_attachment" "lambda_exec_policy" {
 
 # Lambda function resource
 resource "aws_lambda_function" "my_lambda" {
-  function_name = local.lambda_function_name
+  function_name = var.lambda_function_name
   role          = aws_iam_role.lambda_exec_role.arn
   package_type  = "Image"
   image_uri     = "654654606696.dkr.ecr.us-east-1.amazonaws.com/${var.docker_image_selection}:latest"
