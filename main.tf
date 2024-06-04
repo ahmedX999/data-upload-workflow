@@ -49,11 +49,3 @@ resource "aws_lambda_function" "my_lambda" {
   image_uri     = "ghcr.io/ahmedx999/${var.docker_image_selection}:latest"
 }
 
-# Output the Lambda function details
-output "lambda_function_arn" {
-  value = aws_lambda_function.my_lambda.arn
-}
-
-output "lambda_function_name" {
-  value = aws_lambda_function.my_lambda.function_name
-}
